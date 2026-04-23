@@ -129,7 +129,11 @@ if ('IntersectionObserver' in window) {
 
 // Project hover effects
 document.querySelectorAll('.proj').forEach(project => {
-  function activate() {
+  function activate(e) {
+    // Prevent default touch behavior
+    if (e.type === 'touchstart') {
+      e.preventDefault();
+    }
     document.querySelectorAll('.proj').forEach(p => {
       if (p !== project) p.classList.remove('active');
     });
@@ -137,9 +141,8 @@ document.querySelectorAll('.proj').forEach(project => {
     setTimeout(() => project.classList.remove('active'), 400);
   }
   
-  project.addEventListener('touchstart', activate, false);
+  project.addEventListener('touchstart', activate, { passive: false });
   project.addEventListener('click', activate, false);
-  project.onclick = activate;
 });
 
 // Initialize theme from storage
