@@ -164,7 +164,7 @@
         <div class="proj">
           <div class="proj-name">
             Trading Dashboard
-            <a class="proj-link" href="https://github.com/MUMITROLIK/trading-dashboard" target="_blank">↗ GitHub</a>
+            <span class="proj-link" onclick="openProjectModal('https://github.com/MUMITROLIK/trading-dashboard')">↗ GitHub</span>
           </div>
           <div class="proj-stack">
             <span class="tag">HTML</span>
@@ -180,7 +180,7 @@
         <div class="proj">
           <div class="proj-name">
             TON Arbitrage Bot
-            <a class="proj-link" href="https://github.com/MUMITROLIK/ton-nft-arbitrage-bot" target="_blank">↗ GitHub</a>
+            <span class="proj-link" onclick="openProjectModal('https://github.com/MUMITROLIK/ton-nft-arbitrage-bot')">↗ GitHub</span>
           </div>
           <div class="proj-stack">
             <span class="tag">JavaScript</span>
@@ -196,7 +196,7 @@
         <div class="proj">
           <div class="proj-name">
             Playwright API Interceptor
-            <a class="proj-link" href="https://github.com/MUMITROLIK/playwright-api-interceptor" target="_blank">↗ GitHub</a>
+            <span class="proj-link" onclick="openProjectModal('https://github.com/MUMITROLIK/playwright-api-interceptor')">↗ GitHub</span>
           </div>
           <div class="proj-stack">
             <span class="tag">JavaScript</span>
@@ -213,7 +213,7 @@
         <div class="proj">
           <div class="proj-name">
             Browser Game Bot + Captcha Solver
-            <a class="proj-link" href="https://github.com/MUMITROLIK/game_bot_js" target="_blank">↗ GitHub</a>
+            <span class="proj-link" onclick="openProjectModal('https://github.com/MUMITROLIK/game_bot_js')">↗ GitHub</span>
           </div>
           <div class="proj-stack">
             <span class="tag">JavaScript</span>
@@ -229,7 +229,7 @@
         <div class="proj">
           <div class="proj-name">
             Freelance Parser Bot
-            <a class="proj-link" href="https://github.com/MUMITROLIK/vacancy-parser" target="_blank">↗ GitHub</a>
+            <span class="proj-link" onclick="openProjectModal('https://github.com/MUMITROLIK/vacancy-parser')">↗ GitHub</span>
           </div>
           <div class="proj-stack">
             <span class="tag">Python</span>
@@ -263,12 +263,28 @@
 </div>
 
 <!-- Modal -->
-<div class="modal-overlay" id="github-modal" onclick="closeGitHubModal(event)">
+<div class="modal-overlay" id="github-modal" onclick="closeProjectModal(event)">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-title">
       <span data-ru>Перейти на GitHub?</span>
       <span data-en>Go to GitHub?</span>
     </div>
+    <div class="modal-text">
+      <span data-ru>Вы действительно хотите перейти на GitHub и посмотреть мою работу?</span>
+      <span data-en>Do you really want to go to GitHub and check out my work?</span>
+    </div>
+    <div class="modal-buttons">
+      <button class="modal-btn modal-btn-cancel" onclick="closeProjectModal()">
+        <span data-ru>Отмена</span>
+        <span data-en>Cancel</span>
+      </button>
+      <button class="modal-btn modal-btn-confirm" onclick="confirmProject()">
+        <span data-ru>Да, перейти</span>
+        <span data-en>Yes, go</span>
+      </button>
+    </div>
+  </div>
+</div>
     <div class="modal-text">
       <span data-ru>Вы действительно хотите перейти на мой GitHub и посмотреть мои проекты?</span>
       <span data-en>Do you really want to visit my GitHub and check out my projects?</span>

@@ -12,22 +12,32 @@ function switchToEn(e) {
 }
 
 // GitHub modal
-function openGitHubModal() {
+let currentProjectUrl = '';
+
+function openProjectModal(url) {
+  currentProjectUrl = url;
   const modal = document.getElementById('github-modal');
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
-function closeGitHubModal(event) {
+function closeProjectModal(event) {
   if (event && event.target !== event.currentTarget) return;
   const modal = document.getElementById('github-modal');
   modal.classList.remove('active');
   document.body.style.overflow = '';
+  currentProjectUrl = '';
 }
 
-function confirmGitHub() {
-  window.open('https://github.com/MUMITROLIK', '_blank');
-  closeGitHubModal();
+function confirmProject() {
+  if (currentProjectUrl) {
+    window.open(currentProjectUrl, '_blank');
+  }
+  closeProjectModal();
+}
+
+function openGitHubModal() {
+  openProjectModal('https://github.com/MUMITROLIK');
 }
 
 // Theme toggle

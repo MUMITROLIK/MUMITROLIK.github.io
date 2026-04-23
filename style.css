@@ -500,6 +500,7 @@ html.js-loaded .sec.visible {
   text-decoration: none;
   letter-spacing: .04em;
   transition: color .2s;
+  cursor: pointer;
 }
 
 .proj-link:hover { 
