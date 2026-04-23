@@ -15,10 +15,17 @@ function switchToEn(e) {
 let currentProjectUrl = '';
 
 function openProjectModal(url) {
+  console.log('openProjectModal called with:', url);
   currentProjectUrl = url;
   const modal = document.getElementById('github-modal');
-  modal.classList.add('active');
-  document.body.style.overflow = 'hidden';
+  console.log('Modal element:', modal);
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    console.log('Modal opened');
+  } else {
+    console.error('Modal not found!');
+  }
 }
 
 function closeProjectModal(event) {
@@ -39,6 +46,8 @@ function confirmProject() {
 function openGitHubModal() {
   openProjectModal('https://github.com/MUMITROLIK');
 }
+
+console.log('Script loaded successfully');
 
 // Theme toggle
 function toggleTheme(e) {
