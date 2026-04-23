@@ -140,22 +140,15 @@ if ('IntersectionObserver' in window) {
   }, 600);
 }
 
-// Project hover effects
+// Project hover effects - only for visual feedback, not for click handling
 document.querySelectorAll('.proj').forEach(project => {
-  function activate(e) {
-    // Prevent default touch behavior
-    if (e.type === 'touchstart') {
-      e.preventDefault();
-    }
-    document.querySelectorAll('.proj').forEach(p => {
-      if (p !== project) p.classList.remove('active');
-    });
+  project.addEventListener('mouseenter', function() {
     project.classList.add('active');
-    setTimeout(() => project.classList.remove('active'), 400);
-  }
+  });
   
-  project.addEventListener('touchstart', activate, { passive: false });
-  project.addEventListener('click', activate, false);
+  project.addEventListener('mouseleave', function() {
+    project.classList.remove('active');
+  });
 });
 
 // Initialize theme from storage
