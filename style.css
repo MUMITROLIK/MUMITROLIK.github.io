@@ -206,6 +206,118 @@ html.dark-theme .theme-icon {
   color: var(--hi); 
 }
 
+.github-card {
+  display: inline-block;
+  padding: 8px 16px;
+  margin-top: 8px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  color: var(--sub);
+  text-decoration: none;
+  transition: all .25s;
+  cursor: pointer;
+  font-size: 12.5px;
+}
+
+.github-card:hover {
+  border-color: var(--hi);
+  color: var(--hi);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(200,16,46,.1);
+}
+
+html.dark-theme .github-card:hover {
+  box-shadow: 0 4px 12px rgba(255,71,87,.15);
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.6);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+
+.modal-overlay.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+}
+
+.modal {
+  background: var(--paper);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0,0,0,.2);
+  transform: scale(0.9);
+  transition: transform .3s ease;
+}
+
+.modal-overlay.active .modal {
+  transform: scale(1);
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.modal-text {
+  font-size: 14px;
+  color: var(--sub);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.modal-btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.modal-btn-cancel {
+  background: transparent;
+  color: var(--sub);
+  border: 1px solid var(--rule);
+}
+
+.modal-btn-cancel:hover {
+  background: var(--bg);
+}
+
+.modal-btn-confirm {
+  background: var(--hi);
+  color: white;
+  border: 1px solid var(--hi);
+}
+
+.modal-btn-confirm:hover {
+  background: #a00d25;
+  transform: translateY(-1px);
+}
+
 .cv-body { 
   display: grid; 
   grid-template-columns: 210px 1fr; 

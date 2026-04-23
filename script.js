@@ -11,6 +11,25 @@ function switchToEn(e) {
   return false;
 }
 
+// GitHub modal
+function openGitHubModal() {
+  const modal = document.getElementById('github-modal');
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGitHubModal(event) {
+  if (event && event.target !== event.currentTarget) return;
+  const modal = document.getElementById('github-modal');
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function confirmGitHub() {
+  window.open('https://github.com/MUMITROLIK', '_blank');
+  closeGitHubModal();
+}
+
 // Theme toggle
 function toggleTheme(e) {
   if (e) e.preventDefault();
