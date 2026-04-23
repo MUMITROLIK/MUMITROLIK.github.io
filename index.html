@@ -17,6 +17,49 @@
   --accent: #1a1a2e;
   --hi:     #c8102e;
 }
+
+/* ── DARK THEME ── */
+html.dark-theme {
+  --ink:    #e8e8e8;
+  --sub:    #b8b8b8;
+  --muted:  #888888;
+  --rule:   #333333;
+  --bg:     #0a0a0a;
+  --paper:  #1a1a1a;
+  --accent: #e8e8e8;
+  --hi:     #ff4757;
+}
+
+html.dark-theme .cv {
+  box-shadow: 0 2px 40px rgba(0,0,0,.4), 0 1px 4px rgba(0,0,0,.2);
+}
+
+html.dark-theme .bar-track {
+  background: #2a2a2a;
+}
+
+html.dark-theme .tag {
+  background: #252525;
+  color: var(--sub);
+  border-color: #333333;
+}
+
+html.dark-theme .proj {
+  border-color: #2a2a2a;
+}
+
+html.dark-theme .proj:hover, html.dark-theme .proj.active {
+  border-color: var(--hi);
+  box-shadow: 0 4px 18px rgba(255,71,87,.15);
+}
+
+html.dark-theme .proj.active {
+  background: rgba(255,71,87,.05);
+}
+
+html.dark-theme .lang-item {
+  border-bottom-color: #252525;
+}
 body {
   background: var(--bg);
   font-family: 'DM Sans', sans-serif;
@@ -30,9 +73,18 @@ body {
   max-width: 760px;
   margin: 0 auto 18px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   opacity: 0;
   animation: fadeDown .5s .1s ease forwards;
+}
+.lang-bar-left {
+  display: flex;
+  gap: 0;
+}
+.lang-bar-right {
+  display: flex;
+  gap: 0;
 }
 .lb {
   padding: 5px 18px;
@@ -54,6 +106,11 @@ body {
 .lb:last-child  { border-radius: 0 3px 3px 0; border-left: none; }
 .lb.on { background: var(--accent); color: #fff; border-color: var(--accent); }
 .lb:active { transform: scale(0.95); }
+.lb.theme-btn {
+  border-radius: 3px;
+  padding: 5px 12px;
+  font-size: 16px;
+}
 
 /* ── PAPER ── */
 .cv {
@@ -337,8 +394,13 @@ html.js-loaded .sec.visible {
 <body>
 
 <div class="lang-bar">
-  <button class="lb on" id="btn-ru" ontouchstart="switchToRu(event)" onclick="switchToRu(event)">RU</button>
-  <button class="lb"    id="btn-en" ontouchstart="switchToEn(event)" onclick="switchToEn(event)">EN</button>
+  <div class="lang-bar-left">
+    <button class="lb theme-btn" id="btn-theme" onclick="toggleTheme(event)" ontouchstart="toggleTheme(event)">🌙</button>
+  </div>
+  <div class="lang-bar-right">
+    <button class="lb on" id="btn-ru" ontouchstart="switchToRu(event)" onclick="switchToRu(event)">RU</button>
+    <button class="lb"    id="btn-en" ontouchstart="switchToEn(event)" onclick="switchToEn(event)">EN</button>
+  </div>
 </div>
 
 <div class="cv">
@@ -579,6 +641,23 @@ function switchToEn(e) {
   return false;
 }
 
+function toggleTheme(e) {
+  if (e) e.preventDefault();
+  var html = document.documentElement;
+  var btn = document.getElementById('btn-theme');
+  
+  if (html.classList.contains('dark-theme')) {
+    html.classList.remove('dark-theme');
+    btn.textContent = '🌙';
+    localStorage.setItem('theme', 'light');
+  } else {
+    html.classList.add('dark-theme');
+    btn.textContent = '☀️';
+    localStorage.setItem('theme', 'dark');
+  }
+  return false;
+}
+
 /* ── Lang ── */
 var ROLE_TEXT = 'Junior Software Developer';
 
@@ -660,6 +739,14 @@ for (var p = 0; p < projs.length; p++) {
 }
 
 /* ── Init ── */
+// Инициализация темы из localStorage
+var savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+  document.documentElement.classList.add('dark-theme');
+  var themeBtn = document.getElementById('btn-theme');
+  if (themeBtn) themeBtn.textContent = '☀️';
+}
+
 // Дополнительные обработчики для совместимости
 window.addEventListener('load', function() {
   var btnRu = document.getElementById('btn-ru');
