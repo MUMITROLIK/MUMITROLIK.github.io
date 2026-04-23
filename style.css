@@ -464,7 +464,7 @@ html.js-loaded .sec.visible {
   border: 1px solid #efefef;
   border-radius: 6px;
   transition: border-color .25s, box-shadow .25s, transform .25s;
-  cursor: default;
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
