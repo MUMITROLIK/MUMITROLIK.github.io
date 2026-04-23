@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ru" class="lang-ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Резюме — Владимир Герасимов</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink:    #111111;
+  --sub:    #444444;
+  --muted:  #888888;
+  --rule:   #cccccc;
+  --bg:     #f5f3ef;
+  --paper:  #ffffff;
+  --accent: #1a1a2e;
+  --hi:     #c8102e;
+}
+body {
+  background: var(--bg);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink);
+  padding: 40px 20px 60px;
+  min-height: 100vh;
+}
+
+/* ── LANG TOGGLE ── */
+.lang-bar {
+  max-width: 760px;
+  margin: 0 auto 18px;
+  display: flex;
+  justify-content: flex-end;
+  opacity: 0;
+  animation: fadeDown .5s .1s ease forwards;
+}
+.lb {
+  padding: 5px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.lb:first-child { border-radius: 3px 0 0 3px; }
+.lb:last-child  { border-radius: 0 3px 3px 0; border-left: none; }
+.lb.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.lb:active { transform: scale(0.95); }
+
+/* ── PAPER ── */
+.cv {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--paper);
+  box-shadow: 0 2px 40px rgba(0,0,0,.10), 0 1px 4px rgba(0,0,0,.06);
+  opacity: 0;
+  animation: fadeUp .6s .2s ease forwards;
+}
+
+/* ── HEADER ── */
+.cv-head {
+  padding: 52px 56px 40px;
+  border-bottom: 2px solid var(--ink);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 20px;
+}
+.cv-name {
+  font-family: 'EB Garamond', serif;
+  font-size: 46px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -.01em;
+  color: var(--accent);
+  overflow: hidden;
+}
+.cv-name-inner {
+  display: inline-block;
+  transform: translateY(100%);
+  animation: slideUp .7s .4s cubic-bezier(.22,1,.36,1) forwards;
+}
+.cv-role {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--hi);
+  min-height: 1.4em;
+}
+.cv-contacts {
+  text-align: right;
+  font-size: 12.5px;
+  line-height: 1.9;
+  color: var(--sub);
+  opacity: 0;
+  animation: fadeLeft .6s .7s ease forwards;
+}
+.cv-contacts a { color: var(--sub); text-decoration: none; transition: color .2s; }
+.cv-contacts a:hover { color: var(--hi); }
+
+/* ── BODY ── */
+.cv-body { display: grid; grid-template-columns: 210px 1fr; }
+.cv-left  { padding: 36px 28px 48px 56px; border-right: 1px solid var(--rule); }
+.cv-right { padding: 36px 52px 48px 40px; }
+
+/* ── SECTION ── */
+.sec {
+  margin-bottom: 32px;
+  transition: opacity .5s ease, transform .5s ease;
+}
+.sec:last-child { margin-bottom: 0; }
+
+/* Анимация только если JS добавит класс js-loaded */
+html.js-loaded .sec {
+  opacity: 0;
+  transform: translateY(16px);
+}
+html.js-loaded .sec.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sec-label {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 14px;
+}
+
+/* ── ABOUT ── */
+.about-text { font-size: 13.5px; line-height: 1.8; color: var(--sub); }
+
+/* ── SKILL BARS ── */
+.skill-row { margin-bottom: 12px; }
+.skill-cat {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+.skill-cat span { font-weight: 400; text-transform: none; letter-spacing: 0; color: #bbb; font-size: 10px; }
+.bar-track {
+  height: 3px;
+  background: #eeeeee;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 99px;
+  width: var(--w);
+  animation: fillBar 1.2s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes fillBar { from { width: 0; } to { width: var(--w); } }
+.bar-fill.red { background: var(--hi); }
+
+/* ── TOOLS LIST ── */
+.tools-list { font-size: 12.5px; color: var(--sub); line-height: 1.8; }
+
+/* ── EDUCATION ── */
+.edu-name { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.edu-spec { font-size: 12.5px; color: var(--sub); margin-top: 2px; }
+.edu-year { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+/* ── LANG ITEMS ── */
+.lang-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12.5px;
+  color: var(--sub);
+  padding: 5px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.lang-item:last-child { border-bottom: none; }
+.lang-level { color: var(--muted); font-size: 11px; }
+
+/* ── PROJECTS ── */
+.proj {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border: 1px solid #efefef;
+  border-radius: 6px;
+  transition: border-color .25s, box-shadow .25s, transform .25s;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+}
+.proj:last-child { margin-bottom: 0; }
+.proj:hover, .proj.active {
+  border-color: var(--hi);
+  box-shadow: 0 4px 18px rgba(200,16,46,.08);
+  transform: translateY(-2px);
+}
+.proj.active {
+  background: rgba(200,16,46,.02);
+}
+.proj-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.proj-link {
+  font-size: 10.5px;
+  font-weight: 400;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: .04em;
+  transition: color .2s;
+}
+.proj-link:hover { color: var(--hi); }
+.proj-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 7px;
+}
+.tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: #f4f4f4;
+  color: var(--sub);
+  border: 1px solid #e8e8e8;
+}
+.proj-desc { font-size: 12.5px; color: var(--sub); line-height: 1.75; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp   { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeDown { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeLeft { from { opacity:0; transform:translateX(16px); } to { opacity:1; transform:translateX(0); } }
+@keyframes slideUp  { from { transform:translateY(100%); } to { transform:translateY(0); } }
+
+/* ── CARET ── */
+.blink-caret {
+  display: inline-block;
+  width: 2px;
+  height: .85em;
+  background: var(--hi);
+  vertical-align: middle;
+  margin-left: 1px;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ── PRINT ── */
+@media print {
+  body { background: white; padding: 0; }
+  .lang-bar { display: none; }
+  .cv { box-shadow: none; opacity:1; }
+  .sec { opacity:1; transform:none; }
+  .bar-fill { width: var(--w) !important; }
+  .blink-caret { display: none; }
+  .cv-name-inner { transform: none; }
+  .cv-contacts { opacity:1; }
+}
+
+/* ── i18n ── */
+[data-ru],[data-en] { display: none; }
+.lang-ru [data-ru] { display: inline; }
+.lang-en [data-en] { display: inline; }
+.lang-ru [data-ru].b { display: block; }
+.lang-en [data-en].b { display: block; }
+
+/* ── TABLET (≤ 640px) ── */
+@media (max-width: 640px) {
+  body { padding: 20px 12px 40px; }
+
+  .cv-head {
+    padding: 32px 24px 28px;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .cv-name { font-size: 36px; }
+  .cv-contacts {
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.75;
+  }
+
+  .cv-body {
+    grid-template-columns: 1fr;
+  }
+  .cv-left {
+    padding: 28px 24px 28px 24px;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  .cv-right { padding: 28px 24px 36px 24px; }
+}
+
+/* ── MOBILE (≤ 420px) ── */
+@media (max-width: 420px) {
+  body { padding: 12px 8px 32px; }
+
+  .cv-head { padding: 24px 16px 20px; }
+  .cv-name { font-size: 28px; }
+  .cv-role { font-size: 10px; letter-spacing: .14em; }
+  .cv-contacts { font-size: 11.5px; }
+
+  .cv-left  { padding: 20px 16px; }
+  .cv-right { padding: 20px 16px 28px; }
+
+  .about-text { font-size: 13px; }
+  .proj { padding: 12px 12px; }
+  .proj-name { font-size: 13px; }
+  .proj-desc { font-size: 12px; }
+
+  .lb { padding: 5px 12px; font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="lb on" id="btn-ru" ontouchstart="switchToRu(event)" onclick="switchToRu(event)">RU</button>
+  <button class="lb"    id="btn-en" ontouchstart="switchToEn(event)" onclick="switchToEn(event)">EN</button>
+</div>
+
+<div class="cv">
+
+  <!-- HEADER -->
+  <header class="cv-head">
+    <div>
+      <div class="cv-name">
+        <span class="cv-name-inner">
+          <span data-ru>Владимир Герасимов</span>
+          <span data-en>Vladimir Herasimov</span>
+        </span>
+      </div>
+      <div class="cv-role" id="cv-role"></div>
+    </div>
+    <div class="cv-contacts">
+      <div>gg20067891@gmail.com</div>
+      <div>+358 40 445 8772</div>
+      <div><span data-ru>Тампере, Финляндия</span><span data-en>Tampere, Finland</span></div>
+      <div><a href="https://github.com/MUMITROLIK" target="_blank">github.com/MUMITROLIK</a></div>
+    </div>
+  </header>
+
+  <div class="cv-body">
+
+    <!-- LEFT -->
+    <div class="cv-left">
+
+      <!-- Стек -->
+      <div class="sec">
+        <div class="sec-label"><span data-ru>Навыки</span><span data-en>Skills</span></div>
+
+        <div class="skill-row">
+          <div class="skill-cat">Python <span data-ru>— скрипты, автоматизация</span><span data-en>— scripts, automation</span></div>
+          <div class="bar-track"><div class="bar-fill" style="--w:40%" data-w="40%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-cat">JavaScript <span data-ru>— основы, DOM</span><span data-en>— basics, DOM</span></div>
+          <div class="bar-track"><div class="bar-fill" style="--w:30%" data-w="30%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-cat">HTML / CSS <span data-ru>— вёрстка</span><span data-en>— layout</span></div>
+          <div class="bar-track"><div class="bar-fill red" style="--w:45%" data-w="45%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-cat">C# <span data-ru>— базовый уровень</span><span data-en>— basic level</span></div>
+          <div class="bar-track"><div class="bar-fill" style="--w:25%" data-w="25%"></div></div>
+        </div>
+
+        <div style="margin-top:14px">
+          <div class="skill-cat" style="margin-bottom:6px"><span data-ru>Инструменты</span><span data-en>Tools</span></div>
+          <div class="tools-list">Git &nbsp;·&nbsp; VS Code &nbsp;·&nbsp; GitHub</div>
+        </div>
+      </div>
+
+      <!-- AI & Vibe-coding -->
+      <div class="sec">
+        <div class="sec-label"><span data-ru>AI & Vibe-coding</span><span data-en>AI & Vibe-coding</span></div>
+
+        <div class="skill-row">
+          <div class="skill-cat"><span data-ru>AI-агенты / промпты</span><span data-en>AI Agents / Prompting</span></div>
+          <div class="bar-track"><div class="bar-fill red" style="--w:75%" data-w="75%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-cat"><span data-ru>MCP-серверы / тулсы</span><span data-en>MCP Servers / Tools</span></div>
+          <div class="bar-track"><div class="bar-fill" style="--w:60%" data-w="60%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-cat"><span data-ru>Claude Code / CLI</span><span data-en>Claude Code / CLI</span></div>
+          <div class="bar-track"><div class="bar-fill" style="--w:55%" data-w="55%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-cat"><span data-ru>Vibe-coding (Cursor)</span><span data-en>Vibe-coding (Cursor)</span></div>
+          <div class="bar-track"><div class="bar-fill" style="--w:65%" data-w="65%"></div></div>
+        </div>
+      </div>
+
+      <!-- Образование -->
+      <div class="sec">
+        <div class="sec-label"><span data-ru>Образование</span><span data-en>Education</span></div>
+        <div class="edu-name">IT Step Academy</div>
+        <div class="edu-spec">
+          <span data-ru>Разработка программного обеспечения</span>
+          <span data-en>Software Development</span>
+        </div>
+        <div class="edu-year">2023 – 2027 &nbsp;·&nbsp; <span data-ru>3-й курс</span><span data-en>3rd year</span></div>
+      </div>
+
+      <!-- Языки -->
+      <div class="sec">
+        <div class="sec-label"><span data-ru>Языки</span><span data-en>Languages</span></div>
+        <div class="lang-item">
+          <span><span data-ru>Русский</span><span data-en>Russian</span></span>
+          <span class="lang-level"><span data-ru>Родной</span><span data-en>Native</span></span>
+        </div>
+        <div class="lang-item">
+          <span><span data-ru>Украинский</span><span data-en>Ukrainian</span></span>
+          <span class="lang-level"><span data-ru>Родной</span><span data-en>Native</span></span>
+        </div>
+        <div class="lang-item">
+          <span><span data-ru>Английский</span><span data-en>English</span></span>
+          <span class="lang-level">A2–B1</span>
+        </div>
+        <div class="lang-item">
+          <span><span data-ru>Финский</span><span data-en>Finnish</span></span>
+          <span class="lang-level"><span data-ru>Начальный</span><span data-en>Beginner</span></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="cv-right">
+
+      <!-- О себе -->
+      <div class="sec">
+        <div class="sec-label"><span data-ru>О себе</span><span data-en>Profile</span></div>
+        <p class="about-text b" data-ru>
+          Студент 3-го курса специальности «Разработка программного обеспечения» в IT Step Academy.
+          Активно занимаюсь вайб-кодингом: работаю с AI-агентами, настраиваю MCP-серверы,
+          изучаю Claude Code и другие CLI-инструменты. Быстро осваиваю новые технологии,
+          умею самостоятельно разбираться в задачах. Имею опыт создания личных проектов.
+          Ищу возможность применить знания на практике и развиваться в команде.
+        </p>
+        <p class="about-text b" data-en>
+          3rd-year Software Development student at IT Step Academy.
+          Actively into vibe-coding: work with AI agents, configure MCP servers,
+          and explore Claude Code and other CLI tools. Fast learner who picks up new technologies
+          independently. Have hands-on experience building personal projects.
+          Looking for an opportunity to apply skills in a real environment and grow within a team.
+        </p>
+      </div>
+
+      <!-- Проекты -->
+      <div class="sec">
+        <div class="sec-label"><span data-ru>Проекты</span><span data-en>Projects</span></div>
+
+        <div class="proj">
+          <div class="proj-name">
+            Trading Dashboard
+            <a class="proj-link" href="https://github.com/MUMITROLIK" target="_blank">↗ GitHub</a>
+          </div>
+          <div class="proj-stack">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+          </div>
+          <div class="proj-desc">
+            <span data-ru>Локальный веб-дашборд для отслеживания торговой статистики: графики сделок, текущие позиции, история операций. Самостоятельный проект — от идеи до реализации.</span>
+            <span data-en>Local web dashboard for tracking trading statistics: trade charts, open positions, transaction history. Independent project — from idea to implementation.</span>
+          </div>
+        </div>
+
+        <div class="proj">
+          <div class="proj-name">TON Arbitrage Bot</div>
+          <div class="proj-stack">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Telegram Bot API</span>
+            <span class="tag">TON APIs</span>
+          </div>
+          <div class="proj-desc">
+            <span data-ru>Бот для арбитража NFT-подарков в сети TON: перехватывает данные с маркетплейсов (GetGems, MRKT), сравнивает флоры, считает профит и отправляет уведомления с картинками и ссылками прямо в Telegram.</span>
+            <span data-en>Arbitrage bot for TON network NFT gifts: intercepts data from marketplaces (GetGems, MRKT), compares floor prices, calculates profit, and sends notifications with images and links directly to Telegram.</span>
+          </div>
+        </div>
+
+        <div class="proj">
+          <div class="proj-name">Playwright API Interceptor</div>
+          <div class="proj-stack">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Playwright</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">Telegram</span>
+          </div>
+          <div class="proj-desc">
+            <span data-ru>Скрипт, который автоматически заходит в Telegram, открывает WebApp-бота (MRKT и др.) и перехватывает авторизованные API-запросы — те, что требуют токены сессии и недоступны напрямую.</span>
+            <span data-en>A script that automatically opens Telegram, launches a WebApp bot (MRKT etc.) and intercepts authorized API requests — those requiring session tokens that aren't accessible directly.</span>
+          </div>
+        </div>
+
+        <div class="proj">
+          <div class="proj-name">Browser Game Bot + Captcha Solver</div>
+          <div class="proj-stack">
+            <span class="tag">JavaScript</span>
+            <span class="tag">DOM API</span>
+            <span class="tag">Console injection</span>
+          </div>
+          <div class="proj-desc">
+            <span data-ru>JS-бот для браузерной игры, вводимый через консоль: кликает по нужным элементам, решает капчи (выбор цвета, счёт, картинки). Для маскировки сделал отдельный вывод логов — стандартная консоль сайта оставалась чистой.</span>
+            <span data-en>JS bot for a browser game, injected via console: clicks game elements and solves captchas (color selection, math, image puzzles). Built a custom log output so the site's native console remained clean and undetected.</span>
+          </div>
+        </div>
+
+        <div class="proj">
+          <div class="proj-name">Freelance Parser Bot</div>
+          <div class="proj-stack">
+            <span class="tag">Python</span>
+            <span class="tag">Telegram Bot API</span>
+            <span class="tag">REST API</span>
+          </div>
+          <div class="proj-desc">
+            <span data-ru>Бот-агрегатор заказов с фриланс-биржи: фильтрует новые заказы по моим критериям через API и присылает подходящие в Telegram с описанием и ссылкой.</span>
+            <span data-en>Freelance order aggregator bot: filters new orders by custom criteria via API and sends matching ones to Telegram with description and link.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Дополнительно -->
+      <div class="sec">
+        <div class="sec-label"><span data-ru>Интересы</span><span data-en>Interests</span></div>
+        <p class="about-text b" data-ru>
+          Активно интересуюсь сферой ИИ: слежу за развитием AI-агентов, экспериментирую
+          с MCP-серверами и инструментами вроде Claude Code. Также интересуюсь кибербезопасностью
+          и алгоритмической торговлей. Открыт к стажировке и первому коммерческому опыту.
+        </p>
+        <p class="about-text b" data-en>
+          Deeply interested in AI: follow developments in AI agents, experiment with MCP servers
+          and tools like Claude Code. Also interested in cybersecurity and algorithmic trading.
+          Open to internships and first commercial experience.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Глобальные функции для inline-обработчиков ── */
+function switchToRu(e) {
+  if (e) e.preventDefault();
+  setLang('ru');
+  return false;
+}
+
+function switchToEn(e) {
+  if (e) e.preventDefault();
+  setLang('en');
+  return false;
+}
+
+/* ── Lang ── */
+var ROLE_TEXT = 'Junior Software Developer';
+
+function setLang(l) {
+  var html = document.documentElement;
+  html.lang = l;
+  html.classList.remove('lang-ru', 'lang-en');
+  html.classList.add('lang-' + l);
+
+  var btnRu = document.getElementById('btn-ru');
+  var btnEn = document.getElementById('btn-en');
+  if (l === 'ru') {
+    btnRu.classList.add('on');
+    btnEn.classList.remove('on');
+  } else {
+    btnEn.classList.add('on');
+    btnRu.classList.remove('on');
+  }
+  runWriter(ROLE_TEXT);
+}
+
+/* ── Typewriter ── */
+var writerTimer = null;
+function runWriter(text) {
+  var el = document.getElementById('cv-role');
+  if (writerTimer) clearTimeout(writerTimer);
+  el.innerHTML = '<span class="blink-caret"></span>';
+  var i = 0;
+  function next() {
+    if (i <= text.length) {
+      el.innerHTML = text.slice(0, i) + '<span class="blink-caret"></span>';
+      i++;
+      writerTimer = setTimeout(next, 55);
+    }
+  }
+  next();
+}
+
+/* ── Scroll reveal ── */
+function showSec(el) { el.classList.add('visible'); }
+
+if ('IntersectionObserver' in window) {
+  document.documentElement.classList.add('js-loaded');
+  var watcher = new IntersectionObserver(function(entries) {
+    for (var j = 0; j < entries.length; j++) {
+      if (entries[j].isIntersecting) {
+        showSec(entries[j].target);
+        watcher.unobserve(entries[j].target);
+      }
+    }
+  }, { threshold: 0, rootMargin: '0px 0px -10px 0px' });
+  var secs = document.querySelectorAll('.sec');
+  for (var k = 0; k < secs.length; k++) { watcher.observe(secs[k]); }
+  setTimeout(function() {
+    var hidden = document.querySelectorAll('.sec:not(.visible)');
+    for (var m = 0; m < hidden.length; m++) { showSec(hidden[m]); }
+  }, 600);
+}
+
+/* ── Touch effect on projects ── */
+var projs = document.querySelectorAll('.proj');
+for (var p = 0; p < projs.length; p++) {
+  (function(proj) {
+    // Функция активации
+    function activateProj() {
+      var allProjs = document.querySelectorAll('.proj');
+      for (var i = 0; i < allProjs.length; i++) {
+        if (allProjs[i] !== proj) allProjs[i].classList.remove('active');
+      }
+      proj.classList.add('active');
+      setTimeout(function() { proj.classList.remove('active'); }, 400);
+    }
+    
+    // Множественные обработчики
+    proj.addEventListener('touchstart', activateProj, false);
+    proj.addEventListener('click', activateProj, false);
+    proj.onclick = activateProj;
+  })(projs[p]);
+}
+
+/* ── Init ── */
+// Дополнительные обработчики для совместимости
+window.addEventListener('load', function() {
+  var btnRu = document.getElementById('btn-ru');
+  var btnEn = document.getElementById('btn-en');
+  
+  if (btnRu && btnEn) {
+    btnRu.addEventListener('click', switchToRu, false);
+    btnEn.addEventListener('click', switchToEn, false);
+  }
+  
+  // Инициализация языка
+  setLang('ru');
+});
+
+// Запасная инициализация если load не сработает
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  setTimeout(function() { setLang('ru'); }, 100);
+}
+</script>
+
+</body>
+</html>
