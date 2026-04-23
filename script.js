@@ -19,6 +19,7 @@ function openProjectModal(url) {
   currentProjectUrl = url;
   const modal = document.getElementById('github-modal');
   console.log('Modal element:', modal);
+  console.log('Current URL set to:', currentProjectUrl);
   if (modal) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -31,12 +32,15 @@ function openProjectModal(url) {
 function closeProjectModal(event) {
   if (event && event.target !== event.currentTarget) return;
   const modal = document.getElementById('github-modal');
-  modal.classList.remove('active');
+  if (modal) {
+    modal.classList.remove('active');
+  }
   document.body.style.overflow = '';
   currentProjectUrl = '';
 }
 
 function confirmProject() {
+  console.log('confirmProject called, opening:', currentProjectUrl);
   if (currentProjectUrl) {
     window.open(currentProjectUrl, '_blank');
   }
