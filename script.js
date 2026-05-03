@@ -1,7 +1,7 @@
 // Language switching
-function switchToRu(e) {
+function switchToUk(e) {
   if (e) e.preventDefault();
-  setLang('ru');
+  setLang('uk');
   return false;
 }
 
@@ -74,18 +74,18 @@ const ROLE_TEXT = 'Junior Software Developer';
 function setLang(lang) {
   const html = document.documentElement;
   html.lang = lang;
-  html.classList.remove('lang-ru', 'lang-en');
+  html.classList.remove('lang-uk', 'lang-en');
   html.classList.add('lang-' + lang);
 
-  const btnRu = document.getElementById('btn-ru');
+  const btnUk = document.getElementById('btn-uk');
   const btnEn = document.getElementById('btn-en');
   
-  if (lang === 'ru') {
-    btnRu.classList.add('on');
+  if (lang === 'uk') {
+    btnUk.classList.add('on');
     btnEn.classList.remove('on');
   } else {
     btnEn.classList.add('on');
-    btnRu.classList.remove('on');
+    btnUk.classList.remove('on');
   }
   
   typeWriter(ROLE_TEXT);
@@ -159,18 +159,18 @@ if (savedTheme === 'dark') {
 
 // Initialize on load
 window.addEventListener('load', () => {
-  const btnRu = document.getElementById('btn-ru');
+  const btnUk = document.getElementById('btn-uk');
   const btnEn = document.getElementById('btn-en');
   
-  if (btnRu && btnEn) {
-    btnRu.addEventListener('click', switchToRu, false);
+  if (btnUk && btnEn) {
+    btnUk.addEventListener('click', switchToUk, false);
     btnEn.addEventListener('click', switchToEn, false);
   }
   
-  setLang('ru');
+  setLang('uk');
 });
 
 // Backup initialization
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  setTimeout(() => setLang('ru'), 100);
+  setTimeout(() => setLang('uk'), 100);
 }

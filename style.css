@@ -618,11 +618,11 @@ html.js-loaded .sec.visible {
   }
 }
 
-[data-ru], [data-en] { 
+[data-uk], [data-en] { 
   display: none; 
 }
 
-.lang-ru [data-ru] { 
+.lang-uk [data-uk] { 
   display: inline; 
 }
 
@@ -630,7 +630,7 @@ html.js-loaded .sec.visible {
   display: inline; 
 }
 
-.lang-ru [data-ru].b { 
+.lang-uk [data-uk].b { 
   display: block; 
 }
 
